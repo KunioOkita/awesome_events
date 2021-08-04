@@ -1,5 +1,6 @@
 # coding: utf-8
 class Event < ApplicationRecord
+  has_one_attached :image
   has_many :tickets, dependent: :destroy
   belongs_to :owner, class_name: "User"
 

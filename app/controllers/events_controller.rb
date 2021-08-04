@@ -21,6 +21,8 @@ class EventsController < ApplicationController
 
   def edit
     @event = current_user.created_events.find(params[:id])
+    puts "@event => #{@event.image.inspect}"
+    puts "@event.image.attached? => #{@event.image.attached?}"
   end
 
   def update
@@ -40,7 +42,7 @@ class EventsController < ApplicationController
 
   def event_params
     params.require(:event).permit(
-      :name, :place, :content, :start_at, :end_at
+      :name, :place, :content, :start_at, :end_at, :image, :remove_image
     )
   end
 end
