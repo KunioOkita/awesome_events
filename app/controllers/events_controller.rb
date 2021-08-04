@@ -14,7 +14,6 @@ class EventsController < ApplicationController
   end
 
   def show
-    puts "current_user =  #{current_user}"
     @event = Event.find(params[:id])
     @ticket = current_user && current_user.tickets.find_by(event: @event)
     @tickets = @event.tickets.includes(:user).order(:created_at)
@@ -22,6 +21,8 @@ class EventsController < ApplicationController
 
   def edit
     @event = current_user.created_events.find(params[:id])
+    puts "@event => #{@event.image.inspect}"
+    puts "@event.image.attached? => #{@event.image.attached?}"
   end
 
   def update
@@ -41,7 +42,7 @@ class EventsController < ApplicationController
 
   def event_params
     params.require(:event).permit(
-      :name, :place, :content, :start_at, :end_at
+      :name, :place, :content, :start_at, :end_at, :image, :remove_image
     )
   end
 end
