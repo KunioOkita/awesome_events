@@ -1,5 +1,6 @@
 %h1 イベント一覧
-%ul.list-group
+
+%ul.list-group.mb-3
   - unless @events.size > 0
     %h2 未開催のイベントはありません
   - else
@@ -7,3 +8,5 @@
       = link_to(event, class: "list-group-item list-group-item-action") do
         %h5.list-group-item-heading= event.name
         %p.mb-1= "#{l(event.start_at, format: :long)} - #{l(event.end_at, format: :long)}"
+
+= paginate @events
