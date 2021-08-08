@@ -1,15 +1,14 @@
-# coding: utf-8
 class Event < ApplicationRecord
   searchkick language: 'japanese'
   has_one_attached :image
   has_many :tickets, dependent: :destroy
-  belongs_to :owner, class_name: "User"
+  belongs_to :owner, class_name: 'User'
   attr_accessor :remove_image
 
   before_save :remove_image_if_user_accept
 
   validates :image,
-            content_type: [:png, :jpg, :jpeg],
+            content_type: %i[png jpg jpeg],
             size: { less_than_or_equal_to: 10.megabytes },
             dimension: { width: { max: 2000 }, height: { max: 2000 } }
 
@@ -22,6 +21,7 @@ class Event < ApplicationRecord
 
   def created_by?(user)
     return false unless user
+
     owner_id == user.id
   end
 
@@ -40,9 +40,7 @@ class Event < ApplicationRecord
   def start_at_should_be_before_end_at
     return unless start_at && end_at
 
-    if start_at >= end_at
-      errors.add(:start_at, "は終了時間よりも前に設定してください")
-    end
+    errors.add(:start_at, 'は終了時間よりも前に設定してください') if start_at >= end_at
   end
 
   def remove_image_if_user_accept

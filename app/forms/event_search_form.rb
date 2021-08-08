@@ -25,6 +25,6 @@ class EventSearchForm
   private
 
   def keyword_for_search
-    keyword.presence || "*"
+    keyword.presence || '*'
   end
 end
